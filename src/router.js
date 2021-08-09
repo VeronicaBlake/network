@@ -12,6 +12,11 @@ const routes = [
     component: loadPage('HomePage')
   },
   {
+    path: '/profile/:id',
+    name: 'ProfilePage',
+    component: loadPage('ProfilePage')
+  },
+  {
     path: '/about',
     name: 'About',
     component: loadPage('AboutPage')
@@ -24,9 +29,11 @@ const routes = [
   }
 ]
 
-export const router = createRouter({
+const router = createRouter({
   linkActiveClass: 'router-link-active',
   linkExactActiveClass: 'router-link-exact-active',
   history: createWebHashHistory(),
   routes
 })
+
+export default router

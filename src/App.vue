@@ -1,15 +1,23 @@
 <template>
-  <header>
-    <Navbar />
-  </header>
-  <main>
-    <router-view />
-  </main>
-  <footer>
-    <div class="bg-dark text-light text-center p-4">
-      Made with 💖 by CodeWorks
+  <div class="row">
+    <div class="col-md-3 d-md-block d-none">
+      <Profile />
     </div>
-  </footer>
+    <div class="col-md-6">
+      <div class="row navBar d-md-block">
+        <Navbar />
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-md-6 col-6"> -->
+        <router-view />
+        <!-- </div> -->
+      </div>
+    </div>
+    <div class="col-md-3">
+      <Markets />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,7 +32,11 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-@import "./assets/scss/main.scss";
 
-</style>
+  <style lang="scss">
+    @import "./assets/scss/main.scss";
+
+    .navBar{
+    min-width: fill
+    }
+  </style>

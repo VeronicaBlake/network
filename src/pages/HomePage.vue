@@ -1,15 +1,35 @@
 <template>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+    <div class="row">
+      <Post v-for="post in state.posts" :key="post.id" :post="post" />
+    </div>
   </div>
 </template>
 
 <script>
+import { computed, onMounted, reactive } from 'vue'
+import { AppState } from '../AppState'
+import { postsService } from '../services/PostsService'
+import Notification from '../utils/Notification'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    const state = reactive({
+      posts: computed(() => AppState.posts)
+    })
+    onMounted(async() => {
+      try {
+        await postsService.getAll()
+        state.loading = false
+      } catch (error) {
+        Notification.toast('Error: ' + error, 'error')
+      }
+    })
+    return {
+      state
+    }
+  }
 }
 </script>
 

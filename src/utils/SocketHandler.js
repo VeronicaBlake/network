@@ -1,33 +1,18 @@
-import { logger } from './Logger.js'
-import { baseURL } from '../env.js'
+import { logger } from './Logger'
 import io from 'socket.io-client'
-
-let connected = false
-let queue = []
-
-const SOCKET_EVENTS = {
-  connection: 'connection',
-  connected: 'connected',
-  disconnect: 'disconnect',
-  authenticate: 'authenticate',
-  authenticated: 'authenticated',
-  userConnected: 'userConnected',
-  userDisconnected: 'userDisconnected',
-  error: 'error'
-}
-
+import { baseURL } from '../services/AxiosService'
 export class SocketHandler {
   /**
    * @param {String} url
    */
-  constructor(url = baseURL) {
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
+  constructor(url) {
     this.socket = io(url || baseURL)
+    this.authenticated = false
+    this.queue = []
     this
-      .on(SOCKET_EVENTS.connected, this.onConnected)
-      .on(SOCKET_EVENTS.authenticated, this.onAuthenticated)
-      .on(SOCKET_EVENTS.error, this.onError)
+      .on('connected', this.onConnected)
+      .on('authenticated', this.onAuthenticated)
+      .on('error', this.onError)
   }
 
   on(event, fn) {
@@ -37,20 +22,16 @@ export class SocketHandler {
 
   onConnected(connection) {
     logger.log('[SOCKET_CONNECTION]', connection)
-    connected = true
   }
 
   onAuthenticated(auth) {
     logger.log('[SOCKET_AUTHENTICATED]', auth)
-    const playback = [...queue]
-    queue = []
+    this.authenticated = true
+    const playback = [...this.queue]
+    this.queue = []
     playback.forEach(e => {
       this.emit(e.action, e.payload)
     })
-  }
-
-  authenticate(bearerToken) {
-    this.socket.emit(SOCKET_EVENTS.authenticate, bearerToken)
   }
 
   onError(error) {
@@ -58,9 +39,9 @@ export class SocketHandler {
   }
 
   emit(action, payload = undefined) {
-    if (!connected) {
+    if (!this.authenticated) {
       logger.log('[ENQUEING_ACTION]', { action, payload })
-      return queue.push({ action, payload })
+      return this.queue.push({ action, payload })
     }
     this.socket.emit(action, payload)
   }
