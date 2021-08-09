@@ -3,18 +3,26 @@
     <div class="row bg-light shadow">
       <div class="col-12">
         <div>
+          <h1>{{ state.account.name }}</h1>
+          <img
+            :src="state.account.imgUrl"
+            alt="user photo"
+            height="180"
+            class="rounded-circle"
+            v-if="state.account.imgUrl"
+          />
+          <h4>{{ state.account.bio }}</h4>
+          <p>{{ state.account.class }}</p>
+          <p>Subscribers: {{ state.account.subs }}</p>
+
+          {{ state.account.coverImg }}
+
+          <i class="fas fa-user-graduate"> {{ state.account.graduated }}</i>
+          <i class="fab fa-github"> {{ state.account.github }}</i>
+          <i class="fab fa-linkedin"> {{ state.account.linkedin }}</i>
+          <i class="far fa-file"> {{ state.account.resume }}</i>
         </div>
       </div>
-      {{ state.account.name }}
-      {{ state.account.subs }}
-      {{ state.account.picture }}
-      {{ state.account.bio }}
-      {{ state.account.coverImg }}
-      {{ state.account.class }}
-      {{ state.account.graduated }}
-      {{ state.account.github }}
-      {{ state.account.linkedin }}
-      {{ state.account.resume }}
     </div>
     <div class="my-2">
       <form @submit.prevent="createPost" v-if="state.user.isAuthenticated && state.account.id === route.params.id">
