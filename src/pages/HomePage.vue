@@ -3,6 +3,14 @@
     <div class="row">
       <Post v-for="post in state.posts" :key="post.id" :post="post" />
     </div>
+    <div class="row">
+      <button class="btn btn-danger m-2" :disabled="!state.newer" @click="getPosts(state.newer)">
+        Newer Posts
+      </button>
+      <button class="btn btn-info m-2" :disabled="!state.older" @click="getPosts(state.older)">
+        Older Posts
+      </button>
+    </div>
   </div>
 </template>
 
@@ -14,8 +22,11 @@ import Notification from '../utils/Notification'
 
 export default {
   name: 'Home',
+  older: ' ',
   setup() {
     const state = reactive({
+      older: computed(() => AppState.older),
+      newer: computed(() => AppState.newer),
       posts: computed(() => AppState.posts)
     })
     onMounted(async() => {
@@ -27,6 +38,14 @@ export default {
       }
     })
     return {
+      async getPosts(url) {
+        try {
+          await postsService.getAll(url)
+          state.loading = false
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
       state
     }
   }

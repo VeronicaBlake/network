@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Hello from the Profile Page! </h1>
+    <h1>Search results page?  </h1>
   </div>
 </template>
 

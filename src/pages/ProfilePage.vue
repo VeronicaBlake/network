@@ -3,29 +3,40 @@
     <div class="row bg-light shadow">
       <div class="col-12">
         <div>
-          <h1>{{ state.account.name }}</h1>
-          <img
-            :src="state.account.imgUrl"
-            alt="user photo"
-            height="180"
-            class="rounded-circle"
-            v-if="state.account.imgUrl"
-          />
-          <h4>{{ state.account.bio }}</h4>
-          <p>{{ state.account.class }}</p>
-          <p>Subscribers: {{ state.account.subs }}</p>
-
-          {{ state.account.coverImg }}
-
-          <i class="fas fa-user-graduate"> {{ state.account.graduated }}</i>
-          <i class="fab fa-github"> {{ state.account.github }}</i>
-          <i class="fab fa-linkedin"> {{ state.account.linkedin }}</i>
-          <i class="far fa-file"> {{ state.account.resume }}</i>
+          <div class="row">
+            <div class="col-md-1">
+              <img
+                :src="state.activeProfile.picture"
+                alt="user photo"
+                height="180"
+                class="rounded-circle profile-pic pr-2"
+                v-if="state.activeProfile.picture"
+              />
+            </div>
+            <div class="col-10 mt-3 ml-3">
+              <h2>{{ state.activeProfile.name }}</h2>
+              <i class="fas fa-user-graduate"> {{ state.activeProfile.graduated }} </i>
+              <p>{{ state.activeProfile.class }}</p>
+              <p>{{ state.activeProfile.bio }}</p>
+            </div>
+          </div>
+          <div class="row ml-5">
+            <img
+              :src="state.activeProfile.coverImg"
+              alt="user photo"
+              height="180"
+              class="background"
+              v-if="state.activeProfile.coverImg"
+            />
+          </div>
+          <i class="fab fa-github"> {{ state.activeProfile.github }}</i>
+          <i class="fab fa-linkedin"> {{ state.activeProfile.linkedin }}</i>
+          <i class="far fa-file"> {{ state.activeProfile.resume }}</i>
         </div>
       </div>
     </div>
     <div class="my-2">
-      <form @submit.prevent="createPost" v-if="state.user.isAuthenticated && state.account.id === route.params.id">
+      <form @submit.prevent="createPost" v-if="state.user.isAuthenticated && state.activeProfile.id === route.params.id">
         <div class="form-group">
           <input type="text"
                  class="form-control"
@@ -92,5 +103,14 @@ export default {
 <style scoped>
 img {
   max-width: 100px;
+}
+.profile-pic {
+    max-width: 10vw;
+    max-height: 10vh;
+    margin-right: 5%;
+  }
+.background{
+  max-width: fill;
+  max-height: 30vh
 }
 </style>

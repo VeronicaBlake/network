@@ -5,6 +5,9 @@ export const AppState = reactive({
   user: {},
   account: {},
   posts: [],
+  newer: '',
+  older: '',
   activePosts: [],
-  markets: []
+  markets: [],
+  activeProfile: {}
 })

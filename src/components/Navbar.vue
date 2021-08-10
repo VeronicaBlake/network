@@ -22,21 +22,10 @@
     >
       <span class="navbar-toggler-icon" />
     </button>
-    <!-- <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
-          </router-link>
-        </li>
-        <li class="nav-item">
-        </li>
-      </ul>
-    </div> -->
     <div class="input-group rounded">
       <input type="search"
              class="form-control rounded"
-             placeholder="Search"
+             placeholder="Search..."
              aria-label="Search"
              aria-describedby="search-addon"
       />

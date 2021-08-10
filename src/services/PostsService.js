@@ -2,9 +2,11 @@ import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
 class PostsService {
-  async getAll() {
-    const res = await api.get('api/posts')
+  async getAll(url = 'api/posts') {
+    const res = await api.get(url)
     AppState.posts = res.data.posts
+    AppState.newer = res.data.newer
+    AppState.older = res.data.older
   }
 
   async deletePost(id) {
