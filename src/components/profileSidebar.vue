@@ -10,15 +10,18 @@
       </button>
 
       <router-link :to="{name: 'ProfilePage', params: {id:account.id}}">
+        <div>
+          <h5 class="d-sm-none d-lg-block">
+            {{ user.name }}
+          </h5>
+        </div>
         <img
           :src="user.picture"
           alt="user photo"
-          height="180"
-          class="rounded-circle"
+          class="rounded-circle profilePic mb-3"
           v-if="user.isAuthenticated"
         />
       </router-link>
-      <h5>{{ user.name }}</h5>
       <div
         class="btn btn-outline-dark text-uppercase"
         @click="logout"
@@ -58,5 +61,9 @@ export default {
 <style lang="scss" scoped>
 .column-height {
   min-height: 100vh;
+}
+.profilePic{
+max-height: 10vh;
+max-width: 10vw
 }
 </style>

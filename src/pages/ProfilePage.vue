@@ -2,54 +2,68 @@
   <div class="container-fluid">
     <div class="row bg-light shadow">
       <div class="col-12">
-        <div>
-          <div class="row">
-            <div class="col-md-1">
-              <img
-                :src="state.activeProfile.picture"
-                alt="user photo"
-                height="180"
-                class="rounded-circle profile-pic pr-2"
-                v-if="state.activeProfile.picture"
-              />
-            </div>
-            <div class="col-10 mt-3 ml-3">
-              <h2>{{ state.activeProfile.name }}</h2>
-              <i class="fas fa-user-graduate"> {{ state.activeProfile.graduated }} </i>
-              <p>{{ state.activeProfile.class }}</p>
-              <p>{{ state.activeProfile.bio }}</p>
-            </div>
-          </div>
-          <div class="row ml-5">
+        <div class="row flex-sm-column flex-lg-row">
+          <div class="col-md-1">
             <img
-              :src="state.activeProfile.coverImg"
+              :src="state.activeProfile.picture"
               alt="user photo"
-              height="180"
-              class="background"
-              v-if="state.activeProfile.coverImg"
+              class="rounded-circle profile-pic pr-2 mt-2 mr-3"
+              v-if="state.activeProfile.picture"
             />
           </div>
-          <i class="fab fa-github"> {{ state.activeProfile.github }}</i>
-          <i class="fab fa-linkedin"> {{ state.activeProfile.linkedin }}</i>
-          <i class="far fa-file"> {{ state.activeProfile.resume }}</i>
+          <div class="col-md-10 ml-3">
+            <h5>{{ state.activeProfile.name }}</h5>
+            <i class="fas fa-user-graduate"> : {{ state.activeProfile.graduated }} </i>
+          </div>
         </div>
       </div>
+      <div class="col mt-3 ml-3">
+        <p>{{ state.activeProfile.class }}</p>
+        <p>{{ state.activeProfile.bio }}</p>
+        <div class="row flex-column">
+          <i class="fab fa-github">
+            <p>
+              {{ state.activeProfile.github }}
+            </p>
+          </i>
+          <i class="fab fa-linkedin">
+            <p>
+              {{ state.activeProfile.linkedin }}
+            </p>
+          </i>
+          <i class="far fa-file">
+            <p>
+              {{ state.activeProfile.resume }}
+            </p>
+          </i>
+        </div>
+      </div>
+
+      <div class="row ml-5">
+        <img
+          :src="state.activeProfile.coverImg"
+          alt="user photo"
+          height="180"
+          class="background"
+          v-if="state.activeProfile.coverImg"
+        />
+      </div>
     </div>
-    <div class="my-2">
-      <form @submit.prevent="createPost" v-if="state.user.isAuthenticated && state.activeProfile.id === route.params.id">
-        <div class="form-group">
-          <input type="text"
-                 class="form-control"
-                 id="body"
-                 placeholder="Share your Veronica Thoughts!"
-                 required
-                 v-model="state.newPost.body"
-          >
-        </div>
-        <div>
-          <Post v-for="post in activePosts" :key="post.id" :post="post" />
-        </div>
-      </form>
+  </div>
+  <div class="my-2 row filld">
+    <form @submit.prevent="createPost" v-if="state.user.isAuthenticated && state.activeProfile.id === route.params.id">
+      <div class="form-group">
+        <input type="text"
+               class="form-control"
+               id="body"
+               placeholder="Share your Veronica Thoughts!"
+               required
+               v-model="state.newPost.body"
+        >
+      </div>
+    </form>
+    <div>
+      <Post v-for="post in activePosts" :key="post.id" :post="post" />
     </div>
   </div>
 </template>
